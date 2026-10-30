@@ -5,7 +5,7 @@ export const SITE = {
   description:
     'Tutorials, projects and notes on robotics, CAD and 3D printing, computer science, and gaming by Jun Seo.',
   author: 'Jun Seo',
-  email: 'jun.seo2213@gmail.com',
+  email: 'jxseo@hamilton.edu',
   github: 'https://github.com/jun0032',
   linkedin: 'https://www.linkedin.com/in/junseo2/',
   // Free key from https://web3forms.com (sent to the email above).
