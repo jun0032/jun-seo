@@ -10,7 +10,7 @@ export const SITE = {
   linkedin: 'https://www.linkedin.com/in/junseo2/',
   // Free key from https://web3forms.com (sent to the email above).
   // Leave empty to hide the contact form and show only the email address.
-  web3formsKey: '',
+  web3formsKey: 'bf7c3882-a174-4cdb-848d-ecaf11e5ffe9',
 };
 
 export const NAV = [
