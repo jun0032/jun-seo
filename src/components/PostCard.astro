@@ -1,24 +1,19 @@
 ---
 import TagList from './TagList.astro';
-import { CATEGORIES } from '../data/site';
 import { formatDate, postUrl, type Post } from '../utils/posts';
 import { readingTime } from '../utils/readingTime';
 
 interface Props {
   post: Post;
-  showType?: boolean;
 }
 
-const { post, showType = false } = Astro.props;
-const { title, description, date, tags } = post.data;
-const category = 'category' in post.data ? post.data.category : undefined;
-const type = post.collection === 'tutorials' ? 'Tutorial' : 'Blog';
+const { post } = Astro.props;
+const { title, description, date, tags, type } = post.data;
 ---
 
-<article class="post-card">
+<article class="post-card" data-filters={type}>
   <p class="meta">
-    {showType && <span class="type">{type}</span>}
-    {category && <span>{CATEGORIES[category]} · </span>}
+    <span class="type">{type === 'tutorial' ? 'Tutorial' : 'General'}</span>
     <time datetime={date.toISOString()}>{formatDate(date)}</time> · {readingTime(post.body)}
     {post.data.draft && <> · <strong>DRAFT</strong></>}
   </p>

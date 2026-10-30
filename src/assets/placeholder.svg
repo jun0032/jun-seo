@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <defs>
+    <pattern id="layers" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="7" fill="#e7e6e1"/>
+      <rect y="7" width="8" height="1" fill="#dcdad3"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="360" fill="url(#layers)"/>
+  <g fill="none" stroke="#a9aba5" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="270" y="140" width="100" height="80" rx="8"/>
+    <circle cx="298" cy="166" r="9"/>
+    <path d="M276 212 l30 -28 l20 18 l14 -12 l26 22"/>
+  </g>
+</svg>

@@ -1,7 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import TagList from '../components/TagList.astro';
-import { CATEGORIES } from '../data/site';
 import { formatDate, type Post } from '../utils/posts';
 import { readingTime } from '../utils/readingTime';
 
@@ -10,18 +9,15 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, date, updated, tags } = post.data;
-const category = 'category' in post.data ? post.data.category : undefined;
-const backHref = `/${post.collection}/`;
-const backLabel = post.collection === 'tutorials' ? 'All tutorials' : 'All posts';
+const { title, description, date, updated, tags, type } = post.data;
+const typeLabel = type === 'tutorial' ? 'Tutorial' : 'General';
 ---
 
 <BaseLayout title={title} description={description}>
   <article>
     <header>
       <p class="meta">
-        <a href={backHref}>← {backLabel}</a>
-        {category && <> · {CATEGORIES[category]}</>}
+        <a href="/posts/">← All posts</a> · <a href={`/posts/#${type}`}>{typeLabel}</a>
       </p>
       <h1 class="page-title">{title}</h1>
       <p class="meta">

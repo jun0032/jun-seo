@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/copy-resume.mjs",
     "dev": "astro dev",
+    "prebuild": "node scripts/copy-resume.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"

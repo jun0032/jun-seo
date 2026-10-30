@@ -28,6 +28,7 @@
     --layer: rgba(60, 191, 151, 0.07);
     --code-bg: #1f2523;
   }
+  img.placeholder { filter: brightness(0.32) contrast(1.1); }
   .astro-code,
   .astro-code span {
     color: var(--shiki-dark) !important;
@@ -37,6 +38,9 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
+
+/* Keep `hidden` working on elements that set their own display (cards, filter bars). */
+[hidden] { display: none !important; }
 
 html { -webkit-text-size-adjust: 100%; }
 

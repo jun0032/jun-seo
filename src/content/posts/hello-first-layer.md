@@ -2,6 +2,7 @@
 title: "Hello, First Layer"
 description: "Why this site exists and what I'll be writing about."
 date: 2026-10-29
+type: general
 tags: [meta]
 draft: true   # SAMPLE: edit, then set to false to publish
 ---

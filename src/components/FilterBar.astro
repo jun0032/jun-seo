@@ -1,0 +1,62 @@
+---
+// Filter buttons for a list of cards. Each card carries data-filters="key1 key2".
+// Without JavaScript the bar stays hidden and every card is shown.
+interface Props {
+  target: string;   // id of the element that contains the cards
+  options: { key: string; label: string }[];
+  label: string;
+}
+
+const { target, options, label } = Astro.props;
+---
+
+<div class="filter-bar" data-filter-bar data-target={target} role="group" aria-label={label} hidden>
+  <button type="button" data-filter="all" aria-pressed="true">All</button>
+  {options.map(({ key, label }) => (
+    <button type="button" data-filter={key} aria-pressed="false">{label}</button>
+  ))}
+</div>
+
+<script>
+  for (const bar of document.querySelectorAll<HTMLElement>('[data-filter-bar]')) {
+    const list = document.getElementById(bar.dataset.target!);
+    const buttons = [...bar.querySelectorAll<HTMLButtonElement>('button')];
+    if (!list) continue;
+
+    const apply = (key: string) => {
+      if (!buttons.some((b) => b.dataset.filter === key)) key = 'all';
+      for (const b of buttons) b.setAttribute('aria-pressed', String(b.dataset.filter === key));
+      for (const item of list.querySelectorAll<HTMLElement>('[data-filters]')) {
+        item.hidden = key !== 'all' && !item.dataset.filters!.split(' ').includes(key);
+      }
+    };
+
+    bar.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement).closest('button');
+      if (!button) return;
+      const key = button.dataset.filter!;
+      apply(key);
+      // Keep the choice in the URL so a filtered view can be shared.
+      history.replaceState(null, '', key === 'all' ? location.pathname : `#${key}`);
+    });
+
+    apply(decodeURIComponent(location.hash.slice(1)) || 'all');
+    bar.hidden = false;
+  }
+</script>
+
+<style>
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0 0.5rem; }
+  button {
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  button:hover { color: var(--accent); border-color: var(--accent); }
+  button[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: #fff; }
+</style>

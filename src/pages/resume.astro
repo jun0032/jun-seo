@@ -3,15 +3,27 @@ import fs from 'node:fs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../data/site';
 
-// The download button appears once public/resume.pdf exists.
+// scripts/copy-resume.mjs copies resume/resume_web.pdf to public/resume.pdf before dev and build.
 const hasPdf = fs.existsSync('public/resume.pdf');
 ---
 
-<BaseLayout title="Resume" description="Resume of Jun Seo: computer science and physics at Hamilton College.">
+<BaseLayout title="Resume" description="Resume of Jun Seo: computer science and physics at Hamilton College." wide>
   <div class="top">
     <h1 class="page-title">Resume</h1>
-    {hasPdf && <a class="button" href="/resume.pdf" download="Jun_Seo_Resume.pdf">Download PDF</a>}
+    {hasPdf && (
+      <p class="actions">
+        <a class="button open" href="/resume.pdf">Open resume (PDF)</a>
+        <a class="button" href="/resume.pdf" download="Jun_Seo_Resume.pdf">Download PDF</a>
+      </p>
+    )}
   </div>
+
+  {hasPdf && (
+    <iframe class="viewer" src="/resume.pdf#view=FitH" title="Jun Seo's resume (PDF)" loading="lazy"></iframe>
+  )}
+
+  <details class="text-version" open={!hasPdf}>
+  <summary>Text version</summary>
   <p class="meta">
     <a href={`mailto:${SITE.email}`}>{SITE.email}</a> ·
     <a href={SITE.linkedin}>linkedin.com/in/junseo2</a> ·
@@ -113,10 +125,32 @@ const hasPdf = fs.existsSync('public/resume.pdf');
     </div>
     <p><strong>Leadership:</strong> VP of Society of Physics Students; Committee Chair of Hamilton Christian Fellowship</p>
   </section>
+  </details>
 </BaseLayout>
 
 <style>
   .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0; }
+  /* The PDF fills the screen below the header and scrolls on its own. */
+  .viewer {
+    display: block;
+    width: 100%;
+    height: calc(100dvh - 12rem);
+    min-height: 32rem;
+    margin-top: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  /* Phones can't show a PDF inside a page, so they get the Open button instead. */
+  .open { display: none; }
+  @media (max-width: 48rem) {
+    .viewer { display: none; }
+    .open { display: inline-block; }
+  }
+  .text-version { margin-top: 1.5rem; max-width: var(--max); }
+  summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+  .text-version[open] summary { margin-bottom: 1rem; }
   section { margin-top: 2.25rem; }
   h2 {
     font-size: 1.2rem;

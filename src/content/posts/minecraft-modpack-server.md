@@ -2,7 +2,7 @@
 title: "Running a Minecraft modpack server on Linux"
 description: "Set up a NeoForge modpack server on a Linux machine, give it enough RAM, open the port, and keep it running after you log out."
 date: 2026-10-29
-category: gaming
+type: tutorial
 tags: [minecraft, linux, servers]
 draft: true   # SAMPLE: review/rewrite, then set to false to publish
 ---

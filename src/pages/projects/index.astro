@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import FilterBar from '../../components/FilterBar.astro';
+import { PROJECT_CATEGORIES } from '../../data/site';
+import { getProjects } from '../../utils/posts';
+
+const projects = await getProjects();
+const options = Object.entries(PROJECT_CATEGORIES)
+  .filter(([key]) => projects.some((p) => p.data.categories.includes(key as keyof typeof PROJECT_CATEGORIES)))
+  .map(([key, label]) => ({ key, label }));
+---
+
+<BaseLayout title="Projects" description="Everything technical I've built: robots, CAD and 3D prints, software, games, and research." wide>
+  <h1 class="page-title">Projects</h1>
+  <p class="page-intro">Everything technical I've built: robots, CAD and 3D prints, software, games, and research.</p>
+
+  {options.length > 1 && <FilterBar target="project-list" options={options} label="Filter projects by category" />}
+
+  <div id="project-list" class="grid">
+    {projects.map((project) => <ProjectCard project={project} headingLevel={2} />)}
+  </div>
+</BaseLayout>
+
+<style>
+  .grid { margin-top: 1.5rem; }
+</style>

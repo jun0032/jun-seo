@@ -1,0 +1,102 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import placeholder from '../../assets/placeholder.svg';
+import { PROJECT_CATEGORIES } from '../../data/site';
+import { getProjects, type Project } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+const { title, description, categories, tech, github, demo, cover, gallery, date, draft } = project.data;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={title} description={description} wide>
+  <article>
+    <p class="meta">
+      <a href="/projects/">← All projects</a>
+      {categories.map((c) => <> · <a href={`/projects/#${c}`}>{PROJECT_CATEGORIES[c]}</a></>)}
+    </p>
+    <h1 class="page-title">{title}</h1>
+    <p class="meta">{date}{draft && <strong> · DRAFT</strong>}</p>
+    <p class="lede">{description}</p>
+
+    {tech.length > 0 && (
+      <ul class="tags" aria-label="Tech used">
+        {tech.map((t) => <li><span class="tag">{t}</span></li>)}
+      </ul>
+    )}
+    {(github || demo) && (
+      <p class="links">
+        {github && <a class="button" href={github}>GitHub ↗</a>}
+        {demo && <a class="button secondary" href={demo}>Live demo ↗</a>}
+      </p>
+    )}
+
+    {cover ? (
+      <Image class="cover" src={cover} alt={`${title}`} widths={[800, 1600]} sizes="(max-width: 68rem) 100vw, 68rem" />
+    ) : (
+      <img class="cover placeholder" src={placeholder.src} alt="" width="640" height="360" />
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {gallery.length > 0 && (
+      <section>
+        <h2>Gallery</h2>
+        <div class="gallery">
+          {gallery.map(({ image, caption }) => (
+            <figure>
+              <a href={image.src}>
+                <Image src={image} alt={caption ?? ''} widths={[400, 800]} sizes="(max-width: 40rem) 100vw, 20rem" />
+              </a>
+              {caption && <figcaption>{caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  article { max-width: 52rem; }
+  .lede { font-size: 1.15rem; margin: 1rem 0; }
+  .tags { margin-bottom: 1rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .button.secondary:hover { color: #fff; }
+  .cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin: 1.5rem 0 2rem;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+  }
+  figure { margin: 0; }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.35rem; }
+</style>

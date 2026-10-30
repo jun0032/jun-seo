@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects. Tutorials and Blog were merged into Posts.
+/tutorials     /posts/         301
+/tutorials/*   /posts/:splat   301
+/blog          /posts/         301
+/blog/*        /posts/:splat   301

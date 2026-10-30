@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
-import { getAllPosts, type Post } from '../../utils/posts';
+import { getPosts, type Post } from '../../utils/posts';
 
 export async function getStaticPaths() {
-  const posts = await getAllPosts();
+  const posts = await getPosts();
   const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
   return tags.map((tag) => ({
     params: { tag },
@@ -16,10 +16,10 @@ const { tag } = Astro.params;
 const { posts } = Astro.props as { posts: Post[] };
 ---
 
-<BaseLayout title={`#${tag}`} description={`Tutorials and posts tagged ${tag}.`}>
+<BaseLayout title={`#${tag}`} description={`Posts tagged ${tag}.`}>
   <p class="meta"><a href="/tags/">← All tags</a></p>
   <h1 class="page-title">#{tag}</h1>
   <p class="page-intro">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
 
-  {posts.map((post) => <PostCard post={post} showType />)}
+  {posts.map((post) => <PostCard post={post} />)}
 </BaseLayout>

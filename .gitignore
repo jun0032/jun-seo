@@ -10,3 +10,6 @@ resume/*.out
 
 # Local Claude Code settings
 .claude/settings.local.json
+
+# Copied from resume/ at build time (scripts/copy-resume.mjs)
+public/resume.pdf

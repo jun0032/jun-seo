@@ -1,6 +1,6 @@
 # First Layer
 
-Personal site of Jun Seo: tutorials, blog, and projects. Built with [Astro](https://astro.build), hosted on Cloudflare Pages.
+Personal site of Jun Seo: a portfolio of projects plus posts. Built with [Astro](https://astro.build), hosted on Cloudflare Pages.
 
 ## Run it locally
 
@@ -12,16 +12,16 @@ npm run build      # build the live site into dist/ (drafts are hidden)
 
 ## Add content (no code needed)
 
-The **filename becomes the URL**. Use lowercase words joined by hyphens, e.g. `bambu-first-layer-tips.md` → `/tutorials/bambu-first-layer-tips/`.
+Use lowercase words joined by hyphens for file and folder names; they become the URL.
 
-### New tutorial: `src/content/tutorials/<slug>.md`
+### New post: `src/content/posts/<slug>.md` → `/posts/<slug>/`
 
 ~~~md
 ---
 title: "Tuning the first layer on a Bambu P1S"
 description: "One sentence. Shown on cards and in RSS."
 date: 2026-11-05
-category: cad-3d-printing   # robotics | cad-3d-printing | cs | gaming | climbing | misc
+type: tutorial              # tutorial | general  (drives the filter buttons on /posts)
 tags: [3d-printing, bambu]
 draft: false                # true = only visible in `npm run dev`
 ---
@@ -34,52 +34,82 @@ print("hello")
 ~~~
 
 Reading time is calculated for you. Optional field: `updated: 2026-12-01`.
+Post images go in `public/images/posts/`, then `![Alt text](/images/posts/file.png)`.
 
-### New blog post: `src/content/blog/<slug>.md`
+### New project: a folder `src/content/projects/<slug>/` → `/projects/<slug>/`
 
-Same as a tutorial, but **no `category`** line.
+Put `index.md` and the project's photos in the same folder:
 
-### New project: `src/content/projects/<slug>.md`
-
-```md
----
-title: "Project name"
-description: "Two or three sentences."
-tech: [Python, Fusion 360]
-github: https://github.com/jun0032/repo      # optional
-demo: https://example.com                    # optional
-image: /images/projects/project-name.png     # optional; placeholder shown if missing
-date: Fall 2026                              # optional, free text
-order: 5                                     # lower = shown first
-featured: true                               # show on the home page
----
+```
+src/content/projects/my-robot/
+├── index.md
+├── cover.jpg
+├── build-1.jpg
+└── build-2.jpg
 ```
 
-### Images
+`index.md`:
 
-- Project screenshots → `public/images/projects/` (16:9 looks best, ~1280×720)
-- Post images → `public/images/posts/`, then in Markdown: `![Alt text](/images/posts/file.png)`
+~~~md
+---
+title: "Project name"
+description: "Two or three sentences. Shown on the card and at the top of the page."
+categories: [robotics, cad-3d-printing]   # robotics | cad-3d-printing | software | games | research
+tech: [Fusion 360, C++]
+github: https://github.com/jun0032/repo   # optional
+demo: https://example.com                 # optional
+cover: ./cover.jpg                        # optional; neutral placeholder if left out
+gallery:                                  # optional
+  - image: ./build-1.jpg
+    caption: "Drivetrain before wiring"
+  - image: ./build-2.jpg
+date: Fall 2026                           # free text
+order: 5                                  # lower = shown first
+featured: true                            # also show on the home page
+draft: false                              # true = only visible in `npm run dev`
+---
+
+## Overview
+
+What it is, why you built it, what you learned.
+
+## Build log
+
+### 2026-11-05: Drivetrain
+
+What you worked on, what broke, how you fixed it.
+~~~
+
+Photos straight off your phone are fine: the build resizes them and converts them to WebP automatically.
+The 10 draft projects already have this template filled in with `TODO`s.
 
 ### Publish
 
 ```bash
 git add .
-git commit -m "Add tutorial: first layer tuning"
+git commit -m "Add project: my robot"
 git push
 ```
 
 Cloudflare Pages rebuilds and deploys in about a minute. You can also add or edit files directly on github.com.
+
+## Resume
+
+Replace `resume/resume_web.pdf` (compile it from `resume/resume_web.tex`, e.g. in Overleaf) and push.
+It's copied to the site automatically on every build (`scripts/copy-resume.mjs`), so don't put it in `public/`.
+If `npm run dev` is already running, restart it to pick up a new PDF.
 
 ## Other things you might edit
 
 | What | Where |
 |---|---|
 | Site name, tagline, email, social links, contact-form key | `src/data/site.ts` |
+| Navigation, post types, project categories | `src/data/site.ts` |
 | Site URL (change when junseo.dev is live) | `astro.config.mjs` → `site` |
 | Colors and fonts | `src/styles/global.css` (top of file) |
 | About page text | `src/pages/about.astro` |
-| Resume page text | `src/pages/resume.astro` |
-| Resume PDF | compile `resume/resume_web.tex` (e.g. in Overleaf), save as `public/resume.pdf` |
+| Resume text version | `src/pages/resume.astro` |
+| Redirects | `public/_redirects` |
 
 ## Contact form
 
@@ -89,8 +119,6 @@ Cloudflare Pages rebuilds and deploys in about a minute. You can also add or edi
 Until then the About page shows the email address only.
 
 ## Deployment (Cloudflare Pages)
-
-One-time setup: Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git** → pick this repo.
 
 | Setting | Value |
 |---|---|

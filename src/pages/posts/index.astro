@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import FilterBar from '../../components/FilterBar.astro';
+import { POST_TYPES } from '../../data/site';
+import { getPosts } from '../../utils/posts';
+
+const posts = await getPosts();
+const options = Object.entries(POST_TYPES)
+  .filter(([key]) => posts.some((p) => p.data.type === key))
+  .map(([key, label]) => ({ key, label }));
+---
+
+<BaseLayout title="Posts" description="Tutorials and notes on robotics, CAD and 3D printing, computer science, and gaming.">
+  <h1 class="page-title">Posts</h1>
+  <p class="page-intro">Step-by-step tutorials and general notes on things I've built, set up, or broken and fixed.</p>
+
+  {options.length > 1 && <FilterBar target="post-list" options={options} label="Filter posts by type" />}
+
+  <div id="post-list">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+
+  {posts.length === 0 && <p class="meta">No posts yet.</p>}
+</BaseLayout>

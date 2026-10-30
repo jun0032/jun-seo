@@ -14,19 +14,23 @@ export const SITE = {
 };
 
 export const NAV = [
-  { href: '/tutorials/', label: 'Tutorials' },
-  { href: '/blog/', label: 'Blog' },
   { href: '/projects/', label: 'Projects' },
+  { href: '/posts/', label: 'Posts' },
   { href: '/about/', label: 'About' },
   { href: '/resume/', label: 'Resume' },
 ];
 
-// Display names for tutorial categories (used in content.config.ts too).
-export const CATEGORIES = {
+// Post types (the `type:` field in a post's frontmatter) and their filter labels.
+export const POST_TYPES = {
+  tutorial: 'Tutorials',
+  general: 'General',
+} as const;
+
+// Project categories (the `categories:` field in a project's frontmatter) and their filter labels.
+export const PROJECT_CATEGORIES = {
   robotics: 'Robotics',
   'cad-3d-printing': 'CAD & 3D Printing',
-  cs: 'Computer Science',
-  gaming: 'Gaming',
-  climbing: 'Climbing',
-  misc: 'Misc',
+  software: 'Software',
+  games: 'Games',
+  research: 'Research',
 } as const;
