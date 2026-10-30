@@ -105,7 +105,7 @@ If `npm run dev` is already running, restart it to pick up a new PDF.
 |---|---|
 | Site name, tagline, email, social links, contact-form key | `src/data/site.ts` |
 | Navigation, post types, project categories | `src/data/site.ts` |
-| Site URL (change when junseo.dev is live) | `astro.config.mjs` → `site` |
+| Site URL | `astro.config.mjs` → `site` |
 | Colors and fonts | `src/styles/global.css` (top of file) |
 | About page text | `src/pages/about.astro` |
 | Resume text version | `src/pages/resume.astro` |
