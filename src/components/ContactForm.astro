@@ -1,0 +1,40 @@
+---
+import { SITE } from '../data/site';
+
+// Web3Forms sends submissions to SITE.email. Without a key, only the email is shown.
+const redirect = new URL('/about/?sent=1', Astro.site).href;
+---
+
+{SITE.web3formsKey ? (
+  <form class="contact" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value={SITE.web3formsKey} />
+    <input type="hidden" name="subject" value="New message from First Layer" />
+    <input type="hidden" name="redirect" value={redirect} />
+    {/* Spam trap: real visitors never see or fill this. */}
+    <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+
+    <label>Name <input type="text" name="name" required autocomplete="name" /></label>
+    <label>Email <input type="email" name="email" required autocomplete="email" /></label>
+    <label>Message <textarea name="message" rows="5" required></textarea></label>
+    <button class="button" type="submit">Send message</button>
+  </form>
+) : null}
+
+<p class="meta">
+  Or email me directly at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+</p>
+
+<style>
+  .contact { display: grid; gap: 0.9rem; max-width: 32rem; margin-bottom: 1rem; }
+  label { display: grid; gap: 0.3rem; font-weight: 500; font-size: 0.95rem; }
+  input, textarea {
+    font: inherit;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  button { justify-self: start; }
+</style>

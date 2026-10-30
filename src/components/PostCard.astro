@@ -1,0 +1,46 @@
+---
+import TagList from './TagList.astro';
+import { CATEGORIES } from '../data/site';
+import { formatDate, postUrl, type Post } from '../utils/posts';
+import { readingTime } from '../utils/readingTime';
+
+interface Props {
+  post: Post;
+  showType?: boolean;
+}
+
+const { post, showType = false } = Astro.props;
+const { title, description, date, tags } = post.data;
+const category = 'category' in post.data ? post.data.category : undefined;
+const type = post.collection === 'tutorials' ? 'Tutorial' : 'Blog';
+---
+
+<article class="post-card">
+  <p class="meta">
+    {showType && <span class="type">{type}</span>}
+    {category && <span>{CATEGORIES[category]} · </span>}
+    <time datetime={date.toISOString()}>{formatDate(date)}</time> · {readingTime(post.body)}
+    {post.data.draft && <> · <strong>DRAFT</strong></>}
+  </p>
+  <h3><a href={postUrl(post)}>{title}</a></h3>
+  <p class="desc">{description}</p>
+  <TagList tags={tags} />
+</article>
+
+<style>
+  .post-card { padding-block: 1.25rem; border-bottom: 1px solid var(--border); }
+  .post-card:last-child { border-bottom: 0; }
+  h3 { margin: 0.25rem 0 0.4rem; }
+  h3 a { color: var(--text); text-decoration: none; }
+  h3 a:hover { color: var(--accent); }
+  .meta { margin: 0; }
+  .desc { margin: 0 0 0.6rem; color: var(--muted); }
+  .type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent-2);
+    margin-right: 0.5rem;
+  }
+</style>

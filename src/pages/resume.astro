@@ -1,0 +1,136 @@
+---
+import fs from 'node:fs';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
+
+// The download button appears once public/resume.pdf exists.
+const hasPdf = fs.existsSync('public/resume.pdf');
+---
+
+<BaseLayout title="Resume" description="Resume of Jun Seo: computer science and physics at Hamilton College.">
+  <div class="top">
+    <h1 class="page-title">Resume</h1>
+    {hasPdf && <a class="button" href="/resume.pdf" download="Jun_Seo_Resume.pdf">Download PDF</a>}
+  </div>
+  <p class="meta">
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a> ·
+    <a href={SITE.linkedin}>linkedin.com/in/junseo2</a> ·
+    <a href={SITE.github}>github.com/jun0032</a>
+  </p>
+
+  <section>
+    <h2>Education</h2>
+    <div class="item">
+      <div class="row"><strong>Hamilton College, Clinton, NY</strong><span>Expected May 2027</span></div>
+      <p>BA in Computer Science; Minor in Physics</p>
+      <p>QuestBridge National College Match Scholar (4-year full-tuition scholarship)</p>
+      <p>Study abroad, Yonsei University, Seoul, South Korea (Feb–Jun 2026)</p>
+      <ul>
+        <li><strong>CS:</strong> Computer Organization (Game Boy ASM), Operating Systems (C, RISC-V ASM), Algorithms &amp; Data Structures (C++), Principles of Programming Languages (Ruby, Clojure, Haskell, Prolog), Design Principles (C++)</li>
+        <li><strong>Math &amp; Physics:</strong> Multivariable Calculus, Linear Algebra, Waves &amp; Fields, Quantum Physics</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <div class="item">
+      <div class="row"><strong>Hamilton Robotics Club: Founding Member &amp; Secretary</strong><span>Jan 2024–Present</span></div>
+      <p class="tech">Fusion 360, C++</p>
+      <ul>
+        <li>Helped start the club and co-lead the mechanics team at biweekly meetings, building 4 robots for VEX U competitions</li>
+        <li>Teach building techniques to club members, including students with no prior robotics experience</li>
+        <li>Planned and led a CAD workshop, teaching 5 students to design robot parts in Autodesk Fusion 360</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="row"><strong>Computer Science Teaching Assistant, Hamilton College</strong><span>Fall 2025, Fall 2026–Present</span></div>
+      <p class="tech">Game Boy ASM</p>
+      <ul>
+        <li>Assist 9 students in weekly Computer Organization lab sessions with debugging, code review, and conceptual questions</li>
+        <li>Host weekly office hours for 5 CS courses, explaining concepts one-on-one to students</li>
+        <li>Created tools and assignments for a Computer Organization course (Fall 2025)</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="row"><strong>Physics Grader, PHYS 190</strong><span>Fall 2025, Fall 2026–Present</span></div>
+      <ul>
+        <li>Grade weekly problem sets for 30+ students in introductory physics</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="row"><strong>Undergraduate Research Assistant, Hamilton College</strong><span>May–Dec 2025</span></div>
+      <p class="tech">Python, Bash, Linux</p>
+      <ul>
+        <li>Configured an SDR and Raspberry Pi (Ubuntu Linux) with GNU Radio to transmit and receive isolated radio signals</li>
+        <li>Developed and tested automated Python and Bash programs to collect data alongside ground-truth measurements</li>
+        <li>Processed radio spectrogram data and created graphs for a faculty research paper</li>
+        <li>Presented a research poster at the NY6 Undergraduate Research Conference at St. Lawrence University (Nov 2025)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+    <div class="item">
+      <div class="row"><strong>Leap o' Fate: Game Boy platformer</strong><span>Oct–Dec 2024</span></div>
+      <p class="tech">Game Boy ASM</p>
+      <ul>
+        <li>Built a fully playable retro-style platformer from scratch in Game Boy assembly with a classmate, without a game engine</li>
+        <li>Designed and iteratively optimized game logic, movement, and collision detection</li>
+        <li>Playable online at <a href="https://jun0032.github.io">jun0032.github.io</a></li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="row"><strong>TranslateBot: 2nd Place, GateHacks '24 (Colgate University)</strong><span>Sep 2024</span></div>
+      <p class="tech">Python, Gemini API</p>
+      <ul>
+        <li>Built a real-time, multi-language Discord bot (<a href="https://github.com/Straekz/ColgateGateHacks-TranslateBot">GitHub</a>) with 3 teammates in 24 hours</li>
+        <li>Delivered the project pitch to judges, contributing to the 2nd place finish</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <ul class="skills">
+      <li><strong>Programming:</strong> Python, C++, C, Game Boy &amp; RISC-V Assembly, Bash, Ruby, Clojure, Haskell, Prolog</li>
+      <li><strong>Design &amp; Fabrication:</strong> Autodesk Fusion 360 (CAD), VEX robot design and building</li>
+      <li><strong>Hardware &amp; Electronics:</strong> Raspberry Pi, Software-Defined Radio (SDR)</li>
+      <li><strong>Tools &amp; Platforms:</strong> Linux (Ubuntu &amp; Fedora), Git, GNU Radio, MS Excel, LaTeX</li>
+      <li><strong>Languages:</strong> Korean (limited working proficiency)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Additional experience</h2>
+    <div class="item">
+      <div class="row"><strong>Web Editor, <a href="https://hcspectator.com/">The Spectator</a></strong><span>Jan 2024–Dec 2025</span></div>
+      <ul>
+        <li>Maintained the website and uploaded weekly articles for Hamilton's student newspaper</li>
+        <li>Helped grow online readership for the college's main student-run newspaper</li>
+      </ul>
+    </div>
+    <p><strong>Leadership:</strong> VP of Society of Physics Students; Committee Chair of Hamilton Christian Fellowship</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  section { margin-top: 2.25rem; }
+  h2 {
+    font-size: 1.2rem;
+    color: var(--accent);
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--accent-2);
+    margin: 0 0 1rem;
+  }
+  .item { margin-bottom: 1.25rem; }
+  .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; }
+  .row span { color: var(--muted); font-size: 0.9rem; }
+  p { margin: 0.15rem 0; }
+  .tech { color: var(--muted); font-size: 0.9rem; font-style: italic; }
+  ul { margin: 0.4rem 0 0; padding-left: 1.25rem; }
+  li { margin-bottom: 0.2rem; }
+  .skills { list-style: none; padding: 0; }
+</style>

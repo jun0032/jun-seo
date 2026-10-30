@@ -1,0 +1,273 @@
+%%%%
+% Jun's General Resume: web version for junseo.dev (no phone number)
+%%%%
+
+\documentclass[letterpaper,10pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% BEGIN_FILE: mteck.sty
+%% NOTE: Everything between here and END_FILE can
+%% be relocated to "mteck.sty" and then included with:
+%\usepackage{mteck}
+
+% Dependencies
+% NOTE: Some packages (lastpage, hyperref) require second build!
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{bookmark}
+\usepackage{lastpage}
+
+\usepackage{graphicx}
+\usepackage[absolute,overlay]{textpos}
+
+% Sans-Serif
+%\usepackage[sfdefault]{FiraSans}
+%\usepackage[sfdefault]{roboto}
+%\usepackage[sfdefault]{noto-sans}
+%\usepackage[default]{sourcesanspro}
+
+% Serif
+\usepackage{CormorantGaramond}
+\usepackage{charter}
+
+% Colors
+% Use with \color{Name}
+% Can wrap entire heading with {\color{accent} [...] }
+\usepackage{xcolor}
+\definecolor{accentTitle}{HTML}{0e6e55}
+\definecolor{accentText}{HTML}{0e6e55}
+\definecolor{accentLine}{HTML}{a16f0b}
+
+% Misc. Options
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\urlstyle{same}
+
+% Adjust Margins
+\addtolength{\oddsidemargin}{-0.7in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-0.7in}
+\addtolength{\textheight}{1.4in}
+
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\setlength{\tabcolsep}{0pt}
+\setlength{\footskip}{3.7pt}
+\raggedbottom
+\raggedright
+
+% ATS Readability
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+%-----------------%
+% Custom Commands %
+%-----------------%
+
+% Centered title along with subtitle between HR
+% Usage: \documentTitle{Name}{Details}
+\newcommand{\documentTitle}[2]{
+  \begin{center}
+    {\Huge\color{accentTitle} #1}
+    \vspace{10pt}
+    {\color{accentLine} \hrule}
+    \vspace{2pt}
+    %{\footnotesize\color{accentTitle} #2}
+    \footnotesize{#2}
+    \vspace{2pt}
+    {\color{accentLine} \hrule}
+  \end{center}
+}
+
+% Create a footer with correct padding
+% Usage: \documentFooter{\thepage of X}
+\newcommand{\documentFooter}[1]{
+  \setlength{\footskip}{10.25pt}
+  \fancyfoot[C]{\footnotesize #1}
+}
+
+% Simple wrapper to set up page numbering
+% Usage: \numberedPages
+% WARNING: Must run pdflatex twice!
+\newcommand{\numberedPages}{
+  \documentFooter{\thepage/\pageref{LastPage}}
+}
+
+% Section heading with horizontal rule
+% Usage: \section{Title}
+\titleformat{\section}{
+  \vspace{-5pt}
+  \color{accentText}
+  \raggedright\large\bfseries
+}{}{0em}{}[\color{accentLine}\titlerule]
+
+% Section heading with separator and content on same line
+% Usage: \tinysection{Title}
+\newcommand{\tinysection}[1]{
+  \phantomsection
+  \addcontentsline{toc}{section}{#1}
+  {\large{\bfseries\color{accentText}#1} {\color{accentLine} |}}
+}
+
+% Indented line with arguments left/right aligned in document
+% Usage: \heading{Left}{Right}
+\newcommand{\heading}[2]{
+  \hspace{10pt}#1\hfill#2\\
+}
+
+% Adds \textbf to \heading
+\newcommand{\headingBf}[2]{
+  \heading{\textbf{#1}}{\textbf{#2}}
+}
+
+% Adds \textit to \heading
+\newcommand{\headingIt}[2]{
+  \heading{\textit{#1}}{\textit{#2}}
+}
+
+% Template for itemized lists
+% Usage: \begin{resume_list} [items] \end{resume_list}
+\newenvironment{resume_list}{
+  \vspace{-7pt}
+  \begin{itemize}[itemsep=-2px, parsep=1pt, leftmargin=30pt]
+}{
+  \end{itemize}
+  %\vspace{-2pt}
+}
+
+% Formats an item to use as an itemized title
+% Usage: \itemTitle{Title}
+\newcommand{\itemTitle}[1]{
+  \item[] \underline{#1}\vspace{4pt}
+}
+
+% Bullets used in itemized lists
+\renewcommand\labelitemi{--}
+
+%% END_FILE: mteck.sty
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+  %---------%
+  % Heading %
+  %---------%
+
+  % WEB VERSION: no phone number, personal email. Compile and save as public/resume.pdf.
+  \documentTitle{Jun Seo}{
+    \href{mailto:jun.seo2213@gmail.com}{
+      \raisebox{-0.15\height} \faEnvelope\ jun.seo2213@gmail.com} ~ | ~
+    \href{https://www.linkedin.com/in/junseo2/}{
+      \raisebox{-0.15\height} \faLinkedin\ linkedin.com/in/junseo2} ~ | ~
+    \href{https://github.com/jun0032}{
+      \raisebox{-0.15\height} \faGithub\ github.com/jun0032}
+  }
+
+  %-----------%
+  % Education %
+  %-----------%
+
+  \section{Education}
+
+  \headingBf{Hamilton College -- Clinton, NY}{}
+  \heading{\textit{BA in Computer Science; Minor in Physics}}{\textbf{Expected May 2027}}
+  \heading{\textit{QuestBridge National College Match Scholar (4-year full-tuition scholarship)}}{\textbf{Dec 2022}}
+  \heading{\textit{Study Abroad Spring Semester at Yonsei University -- Seoul, South Korea}}{\textbf{Feb -- Jun 2026}}
+  \headingBf{Relevant Coursework}{}
+  \begin{resume_list}
+    \item CS: Computer Organization (Game Boy ASM), Operating Systems (C, RISC-V ASM), Algorithms \& Data Structures (C++), Principles of Programming Languages (Ruby, Clojure, Haskell, Prolog), Design Principles (C++)
+    \item Math \& Physics: Multivariable Calculus, Linear Algebra, Waves \& Fields, Quantum Physics
+  \end{resume_list}
+
+  \headingBf{Eastern Christian High School -- North Haledon, NJ}{Jun 2023}
+
+  %------------%
+  % Experience %
+  %------------%
+
+  \section{Experience}
+
+  \headingBf{Hamilton Robotics Club -- Hamilton College}{}
+  \heading{\textit{Founding Member \& Secretary} \textnormal{(Fusion 360, C++)}}{\textbf{Jan 2024 -- Present}}
+  \begin{resume_list}
+    \item Helped start the club and co-lead the mechanics team at biweekly meetings, building 4 robots for VEX U competitions
+    \item Teach building techniques to club members, including students with no prior robotics experience
+    \item Planned and led a CAD workshop, teaching 5 students to design robot parts in Autodesk Fusion 360
+  \end{resume_list}
+
+  \vspace{4pt}
+  \headingBf{Hamilton College -- Clinton, NY}{}
+  \heading{\textit{Computer Science Teaching Assistant} \textnormal{(GB ASM)}}{\textbf{Fall 2025, Fall 2026 -- Present}}
+  \begin{resume_list}
+    \item Assist 9 students in weekly Computer Organization lab sessions with debugging, code review, and conceptual questions (Professor Dong)
+    \item Host weekly office hours for 5 CS courses, explaining concepts one-on-one to students
+    \item Created tools and assignments for Professor Strash's Computer Organization course (Fall 2025)
+  \end{resume_list}
+
+  \heading{\textit{Physics Grader, PHYS 190}}{\textbf{Fall 2025, Fall 2026 -- Present}}
+  \begin{resume_list}
+    \item Grade weekly problem sets for 30+ students in introductory physics
+  \end{resume_list}
+
+  \heading{\textit{Undergraduate Research Assistant} \textnormal{(Python, Bash, Linux)}}{\textbf{May -- Dec 2025}}
+  \begin{resume_list}
+    \item Configured an SDR and Raspberry Pi (Ubuntu Linux) with GNU Radio to transmit and receive isolated radio signals
+    \item Developed and tested automated Python and Bash programs to collect data alongside ground-truth measurements
+    \item Processed radio spectrogram data and created graphs for Professor Doke's research paper
+    \item Presented research poster at the NY6 Undergraduate Research Conference at St.\ Lawrence University (Nov 2025)
+  \end{resume_list}
+
+  %----------%
+  % Projects %
+  %----------%
+
+  \section{Projects}
+
+  \headingBf{Game Boy Platformer Game -- \textit{Leap o' Fate} \textnormal{(GB ASM)}}{Oct -- Dec 2024}
+  \begin{resume_list}
+    \item Built a fully playable retro-style platformer from scratch in Game Boy assembly with a classmate (\href{https://github.com/panpov}{@panpov}), without a game engine
+    \item Designed and iteratively optimized game logic, movement, and collision detection
+    \item Published online for public playthroughs via a custom-built GitHub page: \textit{\textcolor{blue}{\href{https://jun0032.github.io}{jun0032.github.io}}}
+  \end{resume_list}
+
+  \headingBf{2nd Place at GateHacks '24 -- Colgate University \textnormal{(Python)}}{Sep 2024}
+  \begin{resume_list}
+    \item Built a real-time, multi-language Discord bot (\textcolor{blue}{\href{https://github.com/Straekz/ColgateGateHacks-TranslateBot}{bit.ly/TranslateBot}}) using the Gemini API with 3 teammates in 24 hours
+    \item Delivered the project pitch to judges, contributing to the 2nd place finish
+  \end{resume_list}
+
+  %--------%
+  % Skills %
+  %--------%
+
+  \section{Skills}
+
+  \headingBf{Programming: \textnormal{Python, C++, C, Game Boy \& RISC-V Assembly, Bash, Ruby, Clojure, Haskell, Prolog}}{}
+  \headingBf{Design \& Fabrication: \textnormal{Autodesk Fusion 360 (CAD), VEX robot design and building}}{}
+  \headingBf{Hardware \& Electronics: \textnormal{Raspberry Pi, Software-Defined Radio (SDR)}}{}
+  \headingBf{Tools \& Platforms: \textnormal{Linux (Ubuntu \& Fedora), Git, GNU Radio, MS Excel, LaTeX}}{}
+  \headingBf{Languages: \textnormal{Korean (limited working proficiency)}}{}
+
+  %-----------------------%
+  % Additional Experience %
+  %-----------------------%
+
+  \section{Additional Experience}
+
+  \headingBf{Web Editor, \emph{\href{https://hcspectator.com/}{The Spectator}}}{Jan 2024 -- Dec 2025}
+  \begin{resume_list}
+    \item Maintained the website and uploaded weekly articles via SNO Dashboard for Hamilton's student newspaper
+    \item Helped grow online readership for the college's main student-run newspaper
+  \end{resume_list}
+
+  \headingBf{Leadership: \textnormal{VP of Society of Physics Students, Committee Chair of Hamilton Christian Fellowship}}{}
+
+\end{document}

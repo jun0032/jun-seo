@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  // h2 when the card sits right under the page's h1, h3 when under a section h2.
+  headingLevel?: 2 | 3;
+}
+
+const { project, headingLevel = 3 } = Astro.props;
+const { title, description, tech, github, demo, image, date } = project.data;
+const Heading = `h${headingLevel}`;
+---
+
+<article class="project-card">
+  {image ? (
+    <img src={image} alt={`Screenshot of ${title}`} loading="lazy" width="640" height="360" />
+  ) : (
+    <div class="placeholder layers" aria-hidden="true">
+      <span>{title.charAt(0)}</span>
+    </div>
+  )}
+  <div class="body">
+    <Heading class="title">{title}</Heading>
+    {date && <p class="meta">{date}</p>}
+    <p class="desc">{description}</p>
+    {tech.length > 0 && (
+      <ul class="tags" aria-label="Tech used">
+        {tech.map((t) => <li><span class="tag">{t}</span></li>)}
+      </ul>
+    )}
+    {(github || demo) && (
+      <p class="links">
+        {github && <a href={github}>GitHub ↗</a>}
+        {demo && <a href={demo}>Live demo ↗</a>}
+      </p>
+    )}
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  img, .placeholder {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+  }
+  .placeholder {
+    display: grid;
+    place-items: center;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.85;
+  }
+  .body { padding: 1rem 1.15rem 1.25rem; display: flex; flex-direction: column; flex: 1; }
+  .title { margin: 0 0 0.2rem; font-size: 1.2rem; }
+  .meta { margin: 0 0 0.5rem; }
+  .desc { margin: 0 0 0.85rem; color: var(--muted); }
+  .links { display: flex; gap: 1rem; margin: auto 0 0; padding-top: 0.85rem; font-weight: 600; }
+</style>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { CATEGORIES } from '../../data/site';
+import { getTutorials } from '../../utils/posts';
+
+const tutorials = await getTutorials();
+const used = Object.entries(CATEGORIES).filter(([key]) => tutorials.some((t) => t.data.category === key));
+---
+
+<BaseLayout title="Tutorials" description="Step-by-step guides on robotics, CAD and 3D printing, computer science, and gaming.">
+  <h1 class="page-title">Tutorials</h1>
+  <p class="page-intro">Step-by-step guides for things I've built, set up, or broken and fixed.</p>
+
+  {used.length > 1 && (
+    <nav class="filter" aria-label="Categories">
+      <span class="meta">Jump to:</span>
+      {used.map(([key, label]) => <a class="tag" href={`#${key}`}>{label}</a>)}
+    </nav>
+  )}
+
+  {used.map(([key, label]) => (
+    <section id={key}>
+      <h2>{label}</h2>
+      {tutorials.filter((t) => t.data.category === key).map((post) => <PostCard post={post} />)}
+    </section>
+  ))}
+
+  {tutorials.length === 0 && <p class="meta">No tutorials yet. Check back soon.</p>}
+</BaseLayout>
+
+<style>
+  .filter { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 1.5rem; }
+  section h2 { color: var(--accent); font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.04em; }
+</style>

@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { SITE } from '../data/site';
+---
+
+<BaseLayout title="About" description="About Jun Seo and how to get in touch.">
+  <h1 class="page-title">About</h1>
+
+  <div class="prose">
+    <p>
+      I'm Jun Seo, a senior at Hamilton College majoring in computer science with a minor in physics.
+      I like the point where software meets physical things: robots, CAD models, 3D prints, and
+      low-level code that runs on real (or very old) hardware.
+    </p>
+    <p>
+      At Hamilton I helped start the robotics club, where I co-lead the mechanics team for VEX U and run
+      Fusion 360 workshops. I'm also a TA for Computer Organization, where we write Game Boy assembly.
+      I've done undergraduate research with software-defined radios and a Raspberry Pi, and spent a
+      semester abroad at Yonsei University in Seoul.
+    </p>
+    <p>
+      Away from the keyboard I climb, go to the gym, and play video games. Sometimes that means
+      setting up a Minecraft server for whatever modpack my friends and I are playing.
+    </p>
+
+    <h2>Why "First Layer"?</h2>
+    <p>
+      In 3D printing, the first layer decides whether the whole print succeeds. If it doesn't stick,
+      nothing built on top of it will. This site is my first layer: the notes and fundamentals that
+      make the next project go better.
+    </p>
+
+    <h2 id="contact">Get in touch</h2>
+    <p id="sent" class="sent" hidden>Thanks! Your message was sent.</p>
+  </div>
+
+  <ContactForm />
+
+  <p class="links">
+    <a href={SITE.github}>GitHub</a> · <a href={SITE.linkedin}>LinkedIn</a> · <a href="/resume/">Resume</a>
+  </p>
+</BaseLayout>
+
+<script is:inline>
+  if (new URLSearchParams(location.search).has('sent')) document.getElementById('sent').hidden = false;
+</script>
+
+<style>
+  .sent { padding: 0.6rem 0.9rem; border-left: 3px solid var(--accent); background: var(--surface); }
+  .links { margin-top: 2rem; }
+</style>

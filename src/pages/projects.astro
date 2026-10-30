@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getProjects } from '../utils/posts';
+
+const projects = await getProjects();
+---
+
+<BaseLayout title="Projects" description="Things I've built: games, bots, robots, and research tools." wide>
+  <h1 class="page-title">Projects</h1>
+  <p class="page-intro">Things I've built: games, bots, robots, and research tools.</p>
+
+  <div class="grid">
+    {projects.map((project) => <ProjectCard project={project} headingLevel={2} />)}
+  </div>
+</BaseLayout>
+
+<style>
+  .grid { margin-top: 2rem; }
+</style>

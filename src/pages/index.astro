@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE } from '../data/site';
+import { getBlogPosts, getProjects, getTutorials } from '../utils/posts';
+
+const tutorials = (await getTutorials()).slice(0, 3);
+const posts = (await getBlogPosts()).slice(0, 3);
+const projects = (await getProjects()).filter((p) => p.data.featured).slice(0, 3);
+---
+
+<BaseLayout wide>
+  <section class="hero">
+    <h1 class="page-title">Hi, I'm Jun.</h1>
+    <p class="lede">
+      I'm a computer science student at Hamilton College (physics minor) who likes building things:
+      VEX robots, CAD parts, 3D prints, Game Boy games, and Minecraft servers for modpacks.
+      <strong>{SITE.title}</strong> is where I write down how I did it, so the next build goes better.
+    </p>
+    <p class="why meta">
+      In 3D printing, the first layer decides whether the whole print succeeds. Learning works the same way.
+    </p>
+  </section>
+
+  <div class="section-head">
+    <h2>Latest tutorials</h2>
+    <a href="/tutorials/">All tutorials →</a>
+  </div>
+  {tutorials.length ? tutorials.map((post) => <PostCard post={post} />) : <p class="meta">Tutorials coming soon.</p>}
+
+  <div class="section-head">
+    <h2>Projects</h2>
+    <a href="/projects/">All projects →</a>
+  </div>
+  <div class="grid projects">
+    {projects.map((project) => <ProjectCard project={project} />)}
+  </div>
+
+  <div class="section-head">
+    <h2>From the blog</h2>
+    <a href="/blog/">All posts →</a>
+  </div>
+  {posts.length ? posts.map((post) => <PostCard post={post} />) : <p class="meta">Posts coming soon.</p>}
+</BaseLayout>
+
+<style>
+  .hero { max-width: var(--max); padding-block: 1rem 0.5rem; }
+  .lede { font-size: 1.2rem; margin-top: 1.25rem; }
+  .why { font-style: italic; }
+  .projects { margin-top: 1.25rem; }
+</style>

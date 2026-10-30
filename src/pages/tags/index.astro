@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllPosts } from '../../utils/posts';
+
+const posts = await getAllPosts();
+const counts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1);
+}
+const tags = [...counts].sort(([a], [b]) => a.localeCompare(b));
+---
+
+<BaseLayout title="Tags" description="Browse tutorials and blog posts by tag.">
+  <h1 class="page-title">Tags</h1>
+  <p class="page-intro">Browse tutorials and blog posts by topic.</p>
+
+  <ul class="tags list">
+    {tags.map(([tag, count]) => (
+      <li><a class="tag" href={`/tags/${tag}/`}>#{tag} <span>({count})</span></a></li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .list { margin-top: 1.5rem; gap: 0.6rem; }
+  .list .tag { font-size: 0.95rem; }
+</style>
